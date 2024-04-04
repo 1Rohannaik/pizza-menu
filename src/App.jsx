@@ -68,41 +68,65 @@ const Header = () => {
     </header>
   );
 };
+
 const Menu = () => {
+  const pizzas = pizzaData;
   return (
     <div>
-      {pizzaData.map((pizza) => {
-        return (
-          <div className="pizza">
-            <img src={pizza.photoName} alt={name} />
-            <div>
-              <h3>{pizza.name}</h3>
-              <p>{pizza.ingredients}</p>
-              <span>{pizza.price}</span>
-              <p>{pizza.soldOut}</p>
-            </div>
+      <main className="menu">
+        <h2>our menu </h2>
+      </main>
+      <br />
+      {pizzas && (
+        <> 
+          <h3 className="menu">Best pizza you have never ate before</h3>
+          <br />
+          <div className="pizzas">
+            {pizzas.map((pizza) => {
+              return (
+                <li className="pizza" key={pizza.name}>
+                  <img src={pizza.photoName} alt={name} />
+                  <div>
+                    <h3>{pizza.name}</h3>
+                    <p>{pizza.ingredients}</p>
+                    <p>{pizza.soldOut?"SOLD OUT":pizza.price}</p>
+                  </div>
+                </li>
+              );
+            })}
           </div>
-        );
-      })}
+        </>
+      )}
     </div>
   );
 };
 const Footer = () => {
-  // const hour = new Date().getHours();
-  // const openHour = 9;
-  // const closeHour = 20;
-
-  // if (hour >= openHour && hour <= closeHour) {
-  //   alert("we are open")
-  // }
-  // else {
-  //   alert("sorry we are closed")
-  // }
+  const hour = new Date().getHours();
+  const openHour = 1;
+  const closeHour = 20;
+  const isOpen = hour >= openHour && hour <= closeHour;
   return (
     <footer className="footer">
-      <h2>{new Date().toLocaleTimeString()}.We Are Currently Open</h2>
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p>
+          we are happy to welcome you between {openHour}:00 and {closeHour}:00
+        </p>
+      )}
     </footer>
   );
 };
+
+const Order = ({closeHour}) => {
+  return (
+    <div className="order">
+          <p>
+            we are open until until {closeHour}:00.come visit or order online 
+          </p>
+          <button className="btn">order </button>
+        </div>
+  )
+}
 
 export default App;
